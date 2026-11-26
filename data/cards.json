@@ -1,0 +1,89 @@
+{
+    "cards": [
+        {
+            "name": "Cemitério",
+            "type": "local",
+            "place": "Mão"
+        },
+        {
+            "name": "Floricultura",
+            "type": "local",
+            "place": "Mão"
+        },
+        {
+            "name": "Hospital",
+            "type": "local",
+            "place": "Mão"
+        },
+        {
+            "name": "Hotel",
+            "type": "local",
+            "place": "Mão"
+        },
+        {
+            "name": "Mansão",
+            "type": "local",
+            "place": "Mão"
+        },
+        {
+            "name": "Prefeitura",
+            "type": "local",
+            "place": "Mão"
+        },
+        {
+            "name": "Espingarda",
+            "type": "arma",
+            "place": "Mão"
+        },
+        {
+            "name": "Faca",
+            "type": "arma",
+            "place": "Mão"
+        },
+        {
+            "name": "Soco Inglês",
+            "type": "arma",
+            "place": "Mão"
+        },
+        {
+            "name": "Tesoura",
+            "type": "arma",
+            "place": "Mão"
+        },
+        {
+            "name": "Veneno",
+            "type": "arma",
+            "place": "Mão"
+        },
+        {
+            "name": "Advogado",
+            "type": "pessoa",
+            "place": "Mão"
+        },
+        {
+            "name": "Chefe de Cozinha",
+            "type": "pessoa",
+            "place": "Mão"
+        },
+        {
+            "name": "Dançarina",
+            "type": "pessoa",
+            "place": "Mão"
+        },
+        {
+            "name": "Florista",
+            "type": "pessoa",
+            "place": "Mão"
+        },
+        {
+            "name": "Médica",
+            "type": "pessoa",
+            "place": "Mão"
+        },
+        {
+            "name": "Sargento",
+            "type": "pessoa",
+            "place": "Mão"
+        }
+    ]
+}
