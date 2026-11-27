@@ -14,7 +14,7 @@ export default function Card(props: {carta: CardType}) {
             }}
             className="flex flex-col justify-center items-center
                 bg-white text-black rounded-lg shadow border
-                h-32 aspect-3/4"
+                h-32 aspect-3/4 cursor-grab active:cursor-grabbing"
         >
             <p className="font-bold text-center">
                 {props.carta.name}
