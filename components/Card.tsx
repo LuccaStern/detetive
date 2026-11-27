@@ -1,3 +1,4 @@
+
 import { CardType } from "@/types/types"
 
 export default function Card(props: {carta: CardType}) {
@@ -6,11 +7,14 @@ export default function Card(props: {carta: CardType}) {
             draggable
             onDragStart={(e) => {
                 e.dataTransfer.setData(
-                    'text/plain',
-                    props.carta.name
+                    "application/json",
+                    JSON.stringify({
+                        type: "card",
+                        name: props.carta.name
+                    })
                 )
 
-                e.dataTransfer.effectAllowed = 'move'
+                e.dataTransfer.effectAllowed = "move"
             }}
             className="flex flex-col justify-center items-center
                 bg-white text-black rounded-lg shadow border

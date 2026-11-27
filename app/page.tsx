@@ -30,7 +30,8 @@ export default function Home() {
     const [carregando, setCarregando] = React.useState(false)
     const [erro, setErro] = React.useState<string | null>(null)
 
-    const [montes, setMontes] = React.useState([{name: "Mão", colapsed: false}] as {name: string, colapsed: boolean}[])
+    const [montes, setMontes] = React.useState([{name: "Mão", colapsed: false}] as {name: string, colapsed: boolean}[])  
+    const [montePrincipal, setMontePrincipal] = React.useState('Mão')
 
     const [popUpMao, setPopUpMao] = React.useState({show: false, add: true, monteAtual: ''})
 
@@ -80,7 +81,8 @@ export default function Home() {
             { popUpMao.show &&
                 <PopUpMao montes={montes} setMontes={setMontes}
                     baralhoPessoal={baralhoPessoal} setBaralhoPessoal={setBaralhoPessoal}
-                    add={popUpMao.add} monteAtual={popUpMao.monteAtual} setPopUpMao={setPopUpMao} />
+                    add={popUpMao.add} monteAtual={popUpMao.monteAtual} setPopUpMao={setPopUpMao}
+                    montePrincipal={montePrincipal} setMontePrincipal={setMontePrincipal} />
             }
 
             {/* TABLE */}
@@ -141,7 +143,8 @@ export default function Home() {
             
             {/* HAND */}
             <Hand baralhoPessoal={baralhoPessoal} setBaralhoPessoal={setBaralhoPessoal}
-                montes={montes} setMontes={setMontes} setPopUpMao={setPopUpMao}/>
+                montes={montes} setMontes={setMontes} setPopUpMao={setPopUpMao}
+                montePrincipal={montePrincipal}/>
 
 
         </div>

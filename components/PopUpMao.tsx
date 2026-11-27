@@ -8,6 +8,7 @@ export default function PopUpMao(props: {
     montes: {name: string, colapsed: boolean}[], setMontes: React.Dispatch<React.SetStateAction<{name: string, colapsed: boolean}[]>>
     add: boolean, monteAtual: string,
     setPopUpMao: React.Dispatch<React.SetStateAction<{show: boolean, add: boolean, monteAtual: string}>>
+    montePrincipal: string, setMontePrincipal: React.Dispatch<React.SetStateAction<string>>
 }) {
 
     function createMonte(name: string) {
@@ -15,6 +16,9 @@ export default function PopUpMao(props: {
     }
 
     function renameMonte(name: string) {
+        if (props.monteAtual === props.montePrincipal) {
+            props.setMontePrincipal(name)
+        }
         const newBaralhoPessoal = [...props.baralhoPessoal]
         newBaralhoPessoal.map((carta) => {
             if (carta.place === props.monteAtual) {
