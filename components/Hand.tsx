@@ -1,3 +1,4 @@
+"use client"
 
 import React from "react"
 import { CardType } from "@/types/types"
@@ -17,13 +18,17 @@ export default function Hand(props: {
     setMontes: React.Dispatch<React.SetStateAction<MonteType[]>>
     setPopUpMao: React.Dispatch<React.SetStateAction<{
         show: boolean
-        add: boolean
+        add: boolean | null
         monteAtual: string
     }>>
     baralhoPessoal: CardType[]
     setBaralhoPessoal: React.Dispatch<React.SetStateAction<CardType[]>>
     montePrincipal: string
+    tags: string[]
+    setTags: React.Dispatch<React.SetStateAction<string[]>>
 }) {
+
+    const [tagSelecionada, setTagSelecionada] = React.useState({index: -1, color: ''})
 
     // Recupera os dados do elemento arrastado
     function obterDragData(e: React.DragEvent): DragData | null {
@@ -120,10 +125,42 @@ export default function Hand(props: {
         })
     }
 
+    React.useEffect(() => {
+        if (props.tags.length > 0) {
+            setTagSelecionada({ index: props.tags.length - 1, color: props.tags[props.tags.length - 1]})
+        } else {
+            setTagSelecionada({ index: -1, color: '#000'})
+        }
+    }, [props.tags])
+
     return (
         <div className="flex flex-row items-start justify-start gap-2 w-full h-70 bg-[#005500] p-1 overflow-x-auto overflow-y-hidden">
+            
+            <div className='fixed w-full flex flex-row justify-between items-end -m-1 -mt-11 h-10'>
+                <div className="flex flex-row justify-center items-center bg-[#003300] gap-3 rounded-tr-2xl"
+                    style={{ backgroundColor: props.tags.length > 0 ? "#003300" : "#00000000" }} >
+                    <div className='flex flex-row justify-center items-center pl-2 pt-2 pb-1 pr-4 bg-[#004400] h-fit  text-white rounded-tr-4xl'>
+                        <button className="cursor-pointer" onClick={() => {
+                            props.setPopUpMao({show: true, add: null, monteAtual: ''})
+                        }}>
+                            Criar Tag
+                        </button>
+                    </div>
+                    <div className="flex flex-row justify-start items-center w-fit gap-2 pr-3">
+                        { props.tags.map((tag, index) => (
+                            <div key={index} className={`w-6 aspect-square border-2 border-${index === tagSelecionada.index ? 'white' : 'black'} cursor-pointer`}
+                                style={{ backgroundColor: tag }} onClick={() => {
+                                    setTagSelecionada({index: index, color: tag})
+                                }}
+                                onContextMenu={(e) => {
+                                    e.preventDefault()
+                                    props.setTags(prev => [...prev].filter(t => t != props.tags[index]))
+                                }} >
 
-            <div className='fixed w-full flex flex-row justify-end items-end -m-1 -mt-11 h-10'>
+                            </div>
+                        ))}
+                    </div>
+                </div>
 
                 <div className='flex flex-row justify-center items-center pl-4 pt-4 pb-1 pr-1 bg-[#004400] h-fit aspect-square text-white rounded-tl-full'>
                     <button className="material-symbols-outlined cursor-pointer scale-[1.7] hover:text-[#00ff00]" onClick={() => {
@@ -169,8 +206,8 @@ export default function Hand(props: {
                         style={{ minWidth: `${minWidth}px` }}
                     >
 
-                        <div className='flex flex-row flex-nowrap w-full min-w-fit justify-between gap-2' onContextMenu={() => {
-                            console.log("TESTE")
+                        <div className='flex flex-row flex-nowrap w-full min-w-fit justify-between gap-2' onContextMenu={(e) => {
+                            e.preventDefault()
                             const cartasDoMonte = props.baralhoPessoal.filter(c => c.place === name)
                             const locais = cartasDoMonte.filter(c => c.type === 'local').sort((a, b) => a.name.localeCompare(b.name, "pt-BR"))
                             const armas = cartasDoMonte.filter(c => c.type === 'arma').sort((a, b) => a.name.localeCompare(b.name, "pt-BR"))
@@ -272,20 +309,13 @@ export default function Hand(props: {
                                             )
                                         }}
                                     >
-                                        <Card carta={carta}/>
+                                        <Card carta={carta} draggable={true} tag={tagSelecionada.color} tags={props.tags}/>
                                     </div>
                                 ))
 
                             ) : (
 
-                                <div className="flex flex-col justify-center items-center
-                                    bg-white/20 text-white rounded-lg border-2 border-dashed
-                                    border-white/50 h-32 aspect-3/4 shrink-0"
-                                >
-                                    <p className="text-center text-sm">
-                                        Arraste uma carta para cá
-                                    </p>
-                                </div>
+                                <Card draggable={false} />
 
                             )}
 
