@@ -85,7 +85,7 @@ export default function Home() {
                     baralhoPessoal={baralhoPessoal} setBaralhoPessoal={setBaralhoPessoal}
                     add={popUpMao.add} monteAtual={popUpMao.monteAtual} setPopUpMao={setPopUpMao}
                     montePrincipal={montePrincipal} setMontePrincipal={setMontePrincipal} 
-                    setTags={setTags} />
+                    tags={tags} setTags={setTags} />
             }
 
             {/* TABLE */}

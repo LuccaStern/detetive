@@ -9,7 +9,7 @@ export default function PopUpMao(props: {
     add: boolean | null, monteAtual: string,
     setPopUpMao: React.Dispatch<React.SetStateAction<{show: boolean, add: boolean | null, monteAtual: string}>>
     montePrincipal: string, setMontePrincipal: React.Dispatch<React.SetStateAction<string>>
-    setTags: React.Dispatch<React.SetStateAction<string[]>>
+    tags:string[], setTags: React.Dispatch<React.SetStateAction<string[]>>
 }) {
 
     const [createEnabled, setCreateEnabled] = React.useState(true)
@@ -39,6 +39,12 @@ export default function PopUpMao(props: {
         props.setMontes(newMontes)
     }
     
+    React.useEffect(() => {
+        if (props.tags.find(tag => tag === "#000000")) {
+            setCreateEnabled(false)
+        }
+    }, [props.tags])
+
     return (
         <div className="absolute z-50
             w-screen h-screen 
@@ -46,7 +52,7 @@ export default function PopUpMao(props: {
             flex flex-col justify-center items-center">
         
             <div className="bg-[#004400] rounded-4xl w-fit h-fit p-4 flex flex-col justify-center items-center">
-                <form className="flex flex-col items-center justify-center gap-5 w-full h-full border-2" onSubmit={(e) => {
+                <form className="flex flex-col items-center justify-center gap-5 w-full h-full" onSubmit={(e) => {
                     e.preventDefault()
                     const formData = new FormData(e.currentTarget);
                     const nome = formData.get("nome")?.toString(); 
@@ -78,12 +84,19 @@ export default function PopUpMao(props: {
                     ) : (
                         <input id="tag" name="tag"
                             type="color" required 
-                            className="border rounded w-full"/>
+                            className="rounded w-full"
+                            onChange={(e) => {
+                                if (props.tags.find(tag => tag === e.target.value)) {
+                                    setCreateEnabled(false)
+                                } else {
+                                    setCreateEnabled(true)
+                                }
+                            }} />
                     )}
                     
                     <div className="w-full flex flex-row justify-evenly items-center gap-2">
                         { createEnabled && <button type="submit" className="w-[50%] bg-[#006600] rounded cursor-pointer text-2xl p-1">{ props.add === null ? 'Criar': props.add ? 'Criar' : 'Renomear'}</button> }
-                        <button className="w-[50%] bg-[#cc2222] rounded cursor-pointer text-2xl p-1" onClick={() => props.setPopUpMao(prev => ({...prev, show: false}))}>Cancelar</button>
+                        <button className="w-[50%] bg-[#cc2222] rounded cursor-pointer text-2xl p-1" onClick={() => {props.setPopUpMao(prev => ({...prev, show: false}))}}>Cancelar</button>
                     </div>
                     
                 </form>

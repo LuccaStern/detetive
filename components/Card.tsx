@@ -34,7 +34,7 @@ export default function Card(props: {carta?: CardType, draggable: boolean, tag?:
                 className="flex flex-col justify-center items-center
                     bg-white text-black rounded-lg shadow
                     h-32 aspect-3/4 cursor-grab active:cursor-grabbing"
-                style={{ border: `solid ${showTag ? `2px ${tag}` : '1px black'}`}} 
+                style={{ border: `solid ${showTag ? `3px ${tag}` : '1px black'}`}} 
                 onContextMenu={(e) => {
                     e.preventDefault()
                     if (props.tag) {
