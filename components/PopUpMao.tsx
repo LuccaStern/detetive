@@ -51,7 +51,8 @@ export default function PopUpMao(props: {
             text-white
             flex flex-col justify-center items-center">
         
-            <div className="bg-[#004400] rounded-4xl w-fit h-fit p-4 flex flex-col justify-center items-center">
+            <div className="bg-[#004400] rounded-4xl w-fit h-fit p-4 flex flex-col justify-center items-center"
+                style={{ boxShadow: '0 10px 50px 30px #00ff00' }} >
                 <form className="flex flex-col items-center justify-center gap-5 w-full h-full" onSubmit={(e) => {
                     e.preventDefault()
                     const formData = new FormData(e.currentTarget);

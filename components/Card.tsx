@@ -31,13 +31,13 @@ export default function Card(props: {carta?: CardType, draggable: boolean, tag?:
 
                     e.dataTransfer.effectAllowed = "move"
                 }}
-                className="flex flex-col justify-center items-center
+                className={`flex flex-col justify-center items-center
                     bg-white text-black rounded-lg shadow
-                    h-32 aspect-3/4 cursor-grab active:cursor-grabbing"
+                    h-32 aspect-3/4${ props.draggable ? ' cursor-grab active:cursor-grabbing' : ''}`}
                 style={{ border: `solid ${showTag ? `3px ${tag}` : '1px black'}`}} 
                 onContextMenu={(e) => {
                     e.preventDefault()
-                    if (props.tag) {
+                    if (props.tags && props.tag && props.tags.length > 0) {
                         if (tag != props.tag) {
                             setTag(props.tag)
                             if (!showTag) {

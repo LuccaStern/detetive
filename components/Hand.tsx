@@ -3,6 +3,7 @@
 import React from "react"
 import { CardType } from "@/types/types"
 import Card from "./Card"
+import ordernarCartas from "@/utils/ordernarCartas"
 
 type MonteType = {
     name: string
@@ -16,6 +17,11 @@ type DragData =
 export default function Hand(props: {
     montes: MonteType[]
     setMontes: React.Dispatch<React.SetStateAction<MonteType[]>>
+    popUpMao: {
+        show: boolean
+        add: boolean | null
+        monteAtual: string
+    }
     setPopUpMao: React.Dispatch<React.SetStateAction<{
         show: boolean
         add: boolean | null
@@ -134,7 +140,8 @@ export default function Hand(props: {
     }, [props.tags])
 
     return (
-        <div className="flex flex-row items-start justify-start gap-2 w-full h-70 bg-[#005500] p-1 overflow-x-auto overflow-y-hidden">
+        <div className="flex flex-row items-start justify-start gap-2 w-full h-70 bg-[#005500] p-1 overflow-x-auto overflow-y-hidden"
+            style={{filter: props.popUpMao.show ? 'blur(5px)' : 'none'}} >
             
             <div className='fixed w-full flex flex-row justify-between items-end -m-1 -mt-11 h-10'>
                 <div className="flex flex-row justify-center items-center bg-[#003300] gap-3 rounded-tr-2xl"
@@ -209,10 +216,7 @@ export default function Hand(props: {
                         <div className='flex flex-row flex-nowrap w-full min-w-fit justify-between gap-2' onContextMenu={(e) => {
                             e.preventDefault()
                             const cartasDoMonte = props.baralhoPessoal.filter(c => c.place === name)
-                            const locais = cartasDoMonte.filter(c => c.type === 'local').sort((a, b) => a.name.localeCompare(b.name, "pt-BR"))
-                            const armas = cartasDoMonte.filter(c => c.type === 'arma').sort((a, b) => a.name.localeCompare(b.name, "pt-BR"))
-                            const pessoas = cartasDoMonte.filter(c => c.type === 'pessoa').sort((a, b) => a.name.localeCompare(b.name, "pt-BR"))
-                            props.setBaralhoPessoal(prev => [...prev.filter(c => c.place != name).concat(locais).concat(armas).concat(pessoas)])
+                            props.setBaralhoPessoal(prev => [...prev.filter(c => c.place != name).concat(ordernarCartas(cartasDoMonte))])
                         }}>
 
                             <p

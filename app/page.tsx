@@ -7,6 +7,7 @@ import Hand from '@/components/Hand'
 import { CardType } from '@/types/types'
 import CardsJSON from '@/data/cards.json'
 import React from 'react'
+import ordernarCartas from '@/utils/ordernarCartas'
 
 export default function Home() {
 
@@ -34,6 +35,8 @@ export default function Home() {
     const [montePrincipal, setMontePrincipal] = React.useState('Mão')
 
     const [tags, setTags] = React.useState([] as string[])
+
+    const [reveladas, setReveladas] = React.useState([] as CardType[])
 
     const [popUpMao, setPopUpMao] = React.useState({show: false, add: true, monteAtual: ''} as {show: boolean, add: boolean | null, monteAtual: string})
 
@@ -64,6 +67,7 @@ export default function Home() {
 
             setCartas(data.cartas)
             setExcedentes(data.excedentes)
+            setReveladas(ordernarCartas((data.cartas as CardType[]).concat(data.excedentes as CardType[])))
             setIniciada(true)
 
         } catch (error) {
@@ -87,10 +91,22 @@ export default function Home() {
                     montePrincipal={montePrincipal} setMontePrincipal={setMontePrincipal} 
                     tags={tags} setTags={setTags} />
             }
-
+            
             {/* TABLE */}
-            <div className="flex flex-col items-center justify-center w-full h-full gap-4">
-
+            <div className="flex flex-col items-center justify-start w-full h-full gap-4" 
+                style={{filter: popUpMao.show ? 'blur(5px)' : 'none'}} >
+                
+                <div className='flex flex-row w-full justify-between items-start h-36'>
+                    <img src="/logo.png" className='max-w-92 w-0 md:w-full min-w-0' alt="Logo do Detetive" />
+                    { reveladas.length > 0 &&
+                        <div className='flex flex-row justify-evenly w-full md:max-w-fit p-2 gap-2 bg-[#005500] rounded-bl-2xl rounded-br-2xl md:rounded-br-none'>
+                            { reveladas.map((carta, index) => (
+                                <Card key={index} carta={carta} draggable={false}/>
+                            ))}
+                        </div>
+                    }
+                </div>
+                
                 {!iniciada ? (
                     <button
                         onClick={iniciarPartida}
@@ -146,7 +162,7 @@ export default function Home() {
             
             {/* HAND */}
             <Hand baralhoPessoal={baralhoPessoal} setBaralhoPessoal={setBaralhoPessoal}
-                montes={montes} setMontes={setMontes} setPopUpMao={setPopUpMao}
+                montes={montes} setMontes={setMontes} popUpMao={popUpMao} setPopUpMao={setPopUpMao}
                 montePrincipal={montePrincipal} tags={tags} setTags={setTags}/>
 
 
